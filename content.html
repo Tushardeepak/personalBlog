@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700i" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="content.css">
+    
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-storage.js"></script>
+
+    <title>ContentPage</title>
+  </head>
+  <body>
+    <div class="page">
+      <span class="menu_toggle">
+        <i class="menu_open fa fa-bars fa-lg"></i>
+        <i class="menu_close fa fa-times fa-lg"></i>
+      </span>
+      <ul class="menu_items">
+        <li><a href="index.html"><i class="icon fa fa-home fa-2x"></i> Home</a></li>
+        <li><a href="myblogs.html"><i class=" icon fa fa-briefcase fa-2x"></i> my blogs</a></li>
+        <li><a href="#" id="logout"><i class="icon fa fa-sign-out fa-2x"></i> LogOut</a></li>
+      </ul>
+      <main class="content">
+        <script>
+          var counter = 0;
+        </script>
+            <h1>WRITE</h1>
+            <form id="main-form">
+              <div class="form-group">
+                <textarea type="text" id="main-desc" rows="18" cols="75" placeholder="Write Your Blog Here!!" required></textarea>
+              </div>
+              <div class="form-group">
+                <input type="file" id="main-image" required>
+              </div>
+              <div class="invalid">
+                *Please choose a valid Image.
+              </div>
+              <div class="imgprev">
+                <U>Image Preview</U>
+              </div>
+              <div class="form-group">
+                <img id="selected-image" width="350" height="250" src="#">
+              </div>
+              <div class="form-group">
+                <div id="upload-progress" style="width: 0%;"></div>
+              </div>
+              <div class="form-group">
+                <button id="save-blog" type="button" style="width: 150px; height: 60px;">Post
+                </button>
+              </div>
+              <textarea type="text" id="main-desc1" rows="18" cols="75" placeholder="Title.." required></textarea>
+            </div>
+    
+              <div id="result"></div>
+            </form>
+            <ul class="box-area">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+          </ul>
+    </main>
+    </div>
+  
+  <script>
+          // elements
+      var $page = $('.page');
+      
+      $('.menu_toggle').on('click', function(){
+        $page.toggleClass('shazam');
+      });
+      $('.content').on('click', function(){
+        $page.removeClass('shazam');
+      });
+          
+  </script>
+  
+  
+  <script src="js/index.js"></script>
+      <script>
+          firebase.auth().onAuthStateChanged(function(user){
+  
+              if(!user)
+              {
+                  window.location.href = "signin.html";
+              }
+          });
+      </script>
+  
+  <script>
+    var validImgTypes = ['image/png','image/gif','image/jpg']
+    $('#selected-image').hide();
+    $('.imgprev').hide();
+  
+    function prevImage(img_blog){
+  
+        if(img_blog.files && img_blog.files[0])
+        {
+            var reader = new FileReader();
+  
+        reader.onload = function(e){
+            $('#selected-image').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(img_blog.files[0]);
+        $('#selected-image').show();
+        $('.imgprev').show();
+        $('.invalid').hide();
+        }
+       
+    }
+  
+    $('#main-image').change(function(){
+  
+        prevImage(this);
+    });
+  
+    $('#save-blog').click(function(){
+
+                      
+                      swal({
+                            title: "Hold On!",
+                            text: "Uploading...",
+                            buttons: false,
+                            
+                          });
+                    
+     
+      
+        var desc = $('#main-desc').val();
+        var desc1 = $('#main-desc1').val();
+        var img = $('#main-image').val();
+
+  
+        var desc = $('#main-desc').val();
+        var desc1 = $('#main-desc1').val();
+        var picture = $('#main-image').prop("files")[0];
+  
+        var databaseRef = firebase.database().ref().child("Blogs");
+  
+        databaseRef.once("value").then(function(snapshot){
+  
+            var name = picture["name"];
+            var dateStr = new Date().getTime();
+            var fileCompleteName = name + "_" + dateStr;
+  
+            var storageRef = firebase.storage().ref("Blog Images");
+            var blogStorageRef = storageRef.child(fileCompleteName);
+  
+            var uploadTask = blogStorageRef.put(picture);
+  
+            uploadTask.on("state_changed",
+                function progress(snapshot)
+                {
+                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  
+                   // $('#upload-progress').html(Math.round(percentage) + "%");
+                  //  $('#upload-progress').attr("style","width:" + percentage + "%");
+                    
+                  
+                    
+                    if(percentage == 100)
+                    {
+                      swal({
+                            title: "Done!",
+                            text: "Your post has been posted",
+                            icon: "success",
+                            buttons: false,
+                            timer: 3000,
+                          });
+                    }
+  
+                    var user = firebase.auth().currentUser;
+                    //username not done
+                    var userName;
+  
+                    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadUrl)
+                    {
+                        var time = new Date();
+                        var dateStr = new Date().getTime();
+                        dateStr = 0 - dateStr;
+  
+                        var options = 
+                        {
+                            weekday : "long",
+                            month : "long",
+                            day : "2-digit",
+                            year : "numeric",
+                        };
+                        var blogData = 
+                        {
+                            "image" : downloadUrl,
+                            "name" : fileCompleteName,
+                            "title" : desc1,
+                            "desc" : desc,
+                            "counter": dateStr,
+                            "uid": user.uid,
+                            "time" : time.toLocaleString('en-US', {hour: 'numeric',minute: 'numeric', hour12: true}),
+                            "date" : time.toLocaleDateString('en-US',options)
+  
+  
+                        };
+  
+                          
+  
+                        newPostRef = databaseRef.push();
+  
+                        newPostRef.set(blogData,function(err)
+                        {
+                            if(err)
+                            {
+                                $('#result').html(err.message);
+                            }
+                            else{
+                                
+                                window.open("", "_self");
+                            }
+                            resetForm()
+                        });
+                    });
+                    
+  
+}
+            );
+        });
+    });
+  
+    function resetForm()
+    {
+        $('#main-form')[0].reset();
+        $('#selected-image').fadeOut();
+        $('#upload-progress').html();
+        $('.imgprev').hide();
+        $('.invalid').show();
+  
+    }
+  
+  </script>
+  <script src="sweetalert2/dist/sweetalert2.all.min.js"></script>
+  
+  
+  
+  </body>
+  </html>

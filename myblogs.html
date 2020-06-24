@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700i" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  
+    <link rel="stylesheet" href="myblogs.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-storage.js"></script>
+
+    <title>MyBlogs</title>
+  </head>
+  <body>
+    <div class="page">
+      <span class="menu_toggle">
+        <i class="menu_open fa fa-bars fa-lg"></i>
+        <i class="menu_close fa fa-times fa-lg"></i>
+      </span>
+      <ul class="menu_items">
+        <li><a href="index.html"><i class="icon fa fa-home fa-2x"></i> Home</a></li>
+        <li><a href="content.html"><i class="icon fa fa-pencil fa-2x"></i>write</a></li>
+        <li><a href="#" id="logout"><i class="icon fa fa-sign-out fa-2x"></i> LogOut</a></li>
+      </ul>
+      <main class="content">
+        <script>
+          var counter = 0;
+        </script>
+            <h1>MY BLOGS</h1>
+            <div class="row container-fluid bg-3">
+              <div class="col-sm-12" style="margin-top:10%; margin-left: 10%;" id="below">
+
+              </div>
+            </div>
+            
+    </main>
+    </div>
+  
+  <script>
+          // elements
+      var $page = $('.page');
+      
+      $('.menu_toggle').on('click', function(){
+        $page.toggleClass('shazam');
+      });
+      $('.content').on('click', function(){
+        $page.removeClass('shazam');
+      });
+          
+  </script>
+  
+  
+  <script src="js/index.js"></script>
+      <script>
+          firebase.auth().onAuthStateChanged(function(user){
+  
+              if(!user)
+              {
+                  window.location.href = "signin.html";
+              }
+          });
+      </script>
+  
+  <script>
+    var dbblogs = firebase.database().ref().child("Blogs").orderByChild("counter");
+    dbblogs.on("value",function(blogs)
+    {
+        if(blogs.exists())
+        {
+            var blogsHtml = "";
+            
+            blogs.forEach(function(singleBlog)
+            {
+               
+                blogsHtml += "<div class='jumbotron bg-light text-dark border border-dark'>";
+
+                  blogsHtml += "<div>";
+                        blogsHtml += "<button style='cursor:pointer;padding: 4px;margin:2px ;color:white; background-color:red;font-weight:800' onclick=deleteblogRecord('"+singleBlog.key+"')>DELETE</button>";
+                    blogsHtml += "</div>";
+                    blogsHtml += "<div> <img width='300' height='250' src='";
+                        blogsHtml += singleBlog.val().image;
+                    blogsHtml += "'/></div>";
+                    
+                    blogsHtml += "<div class='row'><p>";
+                   
+
+                    blogsHtml += 
+
+                      "<div style='color:red; margin-top:2px;margin-bottom:2px;'>"
+                      + "date: " + singleBlog.val().date
+                      +"</p> </div>";
+
+                    
+                    blogsHtml += "<div style='color:orange;font-size: 3rem; margin-top:2px;margin-bottom:2px;'>";
+                        blogsHtml += singleBlog.val().title;
+                    blogsHtml += "</div>";
+
+                    blogsHtml += "<div class='text' style='text-align : justify;height:15rem;color:white;'>";
+                        blogsHtml += singleBlog.val().desc;
+                    blogsHtml += "</div>";
+
+                    
+
+                    blogsHtml += "</div>";
+                    
+            });
+            $("#below").html(blogsHtml);
+        }
+    });
+    function deleteblogRecord(key){
+      const fb = firebase.database().ref();
+      fb.child('Blogs/' + key +'/').remove()
+
+    }
+</script>
+  
+  
+  
+  </body>
+  </html>

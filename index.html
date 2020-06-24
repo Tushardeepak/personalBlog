@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700i" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Crimson+Text:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cantora+One&family=Philosopher:ital,wght@1,700&family=Sawarabi+Mincho&display=swap" rel="stylesheet">
+    <title>Home</title>
+    <link rel="stylesheet" href="home.css">
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-storage.js"></script>
+
+</head>
+<body>
+    
+    <div class="page">
+        <span class="menu_toggle">
+          <i class="menu_open fa fa-bars fa-lg"></i>
+          <i class="menu_close fa fa-times fa-lg"></i>
+        </span>
+        <ul class="menu_items">
+          <li><a href="signin.html"><i class="icon fa fa-user fa-2x"></i>admin</a></li>
+          <li><a href="#"><i class="icon fa fa-phone fa-2x"></i> Coffee</a></li>
+          <li><a href="#" id="logout"><i class="icon fa fa-sign-out fa-2x"></i> chill</a></li>
+        </ul>
+      
+    <div class="content">
+        
+        <h1 class="centertext" data-text="WELCOME">
+            WELCOME
+        </h1>
+        <h3 class=" centertext2" data-text="To MY BLOGS">TO MY BLOGS</h3>
+
+        <h1 class="my1 fade-in1 fade-out1">HELLO</h1>
+        <h3 class="my2 fade-in2 fade-out2">MY NAME IS<br>TUSHAR DEEPAK</h3>
+    <div class="rellax d1">
+          <img src="home/2.png" width="70%"/>
+    </div>
+    
+    <div class="rellax d2" data-rellax-speed="6">
+          <img src="home/1.png" width="100%"/>
+    </div>
+    
+    <div class="rellax d3" data-rellax-speed="8">
+          <img src="home/3.png" width="100%"/>
+    </div>
+    
+    <div class="rellax d4" data-rellax-speed="2">
+          <img src="home/4.png" width="90%"/>
+    </div>
+
+    
+
+    <div id="below">
+        
+        
+        
+    </div>
+    
+    
+</div>
+
+
+    </div>
+
+
+    <script>
+        // elements
+    var $page = $('.page');
+    
+    $('.menu_toggle').on('click', function(){
+      $page.toggleClass('shazam');
+    });
+    $('.content').on('click', function(){
+      $page.removeClass('shazam');
+    });
+        
+</script>
+    
+    
+    <script type="text/javascript" src="home/rellax.js"></script>
+    <script>
+        var rellax = new Rellax('.rellax', {
+        // center: true
+        callback: function(position) {
+            // callback every position change
+            
+        }
+      });
+    </script>
+
+
+        
+
+
+<script src="js/index.js"></script>
+<script>
+    firebase.auth().onAuthStateChanged(function(user){
+
+        
+    });
+</script>
+
+<script>
+    var dbblogs = firebase.database().ref().child("Blogs").orderByChild("counter");
+    dbblogs.on("value",function(blogs)
+    {
+        if(blogs.exists())
+        {
+            var blogsHtml = "";
+            
+            blogs.forEach(function(singleBlog)
+            {
+                blogsHtml += "<div class='box'>";
+                blogsHtml += "<div class='container'>";
+
+                blogsHtml += "<div class='cards'>";
+                    blogsHtml += "<div class='img-box'> <img src='";
+                        blogsHtml += singleBlog.val().image;
+                    blogsHtml += "'/></div>";
+                    
+                    blogsHtml += "<div class='descContent'>";
+                        blogsHtml += singleBlog.val().desc;
+                    blogsHtml += "</div>";
+
+                    blogsHtml += "<div class='date'>";
+                        blogsHtml += singleBlog.val().date;
+                    blogsHtml += "</div>";
+
+                    blogsHtml += "<div class='title'>";
+                        blogsHtml += singleBlog.val().title;
+                    blogsHtml += "</div>";
+
+                    blogsHtml += "</div>";
+                    blogsHtml += "</div>";
+            });
+            $("#below").html(blogsHtml);
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,504 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+  font-family: 'Roboto Condensed', sans-serif;
+ background-color: black;
+  overflow-x: hidden;
+}    
+      .d1{
+        
+          margin-top: 100px;
+          margin-left: 300px;
+      }
+      .d2{
+        
+          margin-left: -150px;
+          margin-top: -700px;
+      }
+      .d3{
+        
+          margin-top: -650px;
+      }
+      .d4{
+        
+          margin-top: -1050px;
+      }
+      
+/*:::::::::shazam::::::::::::::::::::::*/
+
+.page {
+  height: 100%;
+  background-color: black;
+}
+.content {
+  height: 120vh;
+  transform-origin: top left;
+  transition: transform 0.7s cubic-bezier(1, 0.005, 0.24, 1);
+  
+  position: absolute;  
+}
+.form-group {
+    display: flex;
+}
+/* basically all styling from now on */
+.menu_toggle {
+  z-index: 900;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  cursor: pointer;
+  width: 100px;
+  height: 80px;
+  background: linear-gradient(-45deg,rgb(168, 4, 4),rgb(122, 1, 1),black);
+  border-bottom-right-radius: 100%;
+}
+.menu_toggle:active i {
+  opacity: 0.8;
+}
+.menu_toggle i {
+  color: #f0f0f0;
+}
+.menu_toggle .menu_open, .menu_toggle .menu_close {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -15px;
+  margin-left: -12px;
+  transition: transform 0.7s cubic-bezier(1, 0.005, 0.24, 1);
+}
+.menu_toggle .menu_open {
+  transform-origin: -100px -100px;
+}
+.menu_toggle .menu_close {
+  transform: rotate(20deg);
+  transform-origin: -100px -160px;
+}
+.menu_items {
+  position: fixed;
+  bottom: 0;
+  left: 50px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  z-index: 900;
+}
+.menu_items li {
+  height: 60px;
+  margin-bottom: 30px;
+  transform: translateX(-300px);
+  transition: transform 0.7s 0s cubic-bezier(1, 0.005, 0.24, 1);
+}
+.menu_items li:nth-child(2) {
+  margin-left: 40px;
+}
+.menu_items li:nth-child(3) {
+  margin-left: 80px;
+}
+.menu_items a {
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #a4a4a4;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.menu_items a .icon {
+  position: relative;
+  display: inline-block;
+  margin-right: 25px;
+  color: #f0f0f0;
+}
+.menu_items a .icon:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: '';
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin-left: -33px;
+  margin-top: -32px;
+  border-radius: 100%;
+  border: 2px solid #f0f0f0;
+  transition: border-color 0.2s;
+}
+.menu_items a:hover {
+  color: #f0f0f0;
+}
+.menu_items a:hover .icon:after {
+  border-color: rgb(122, 1, 1);
+}
+.menu_items a:active .icon {
+  color: #f37272;
+}
+/* Let's open up the menu */
+
+.shazam .content {
+  transform: rotate(-30deg);
+}
+.shazam .menu_open {
+  transform: rotate(-20deg);
+}
+.shazam .menu_close {
+  transform: rotate(0);
+}
+.shazam .menu_items li {
+  transform: translateX(0);
+  transition: transform 0.35s 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.shazam .menu_items li:nth-child(2) {
+  transition-delay: 0.47s;
+}
+.shazam .menu_items li:nth-child(3) {
+  transition-delay: 0.48s;
+}
+/*:::::::::shazam::::::::::::::::::::::*/
+
+/*:::::::::glitch::::::::::::::::::::::*/
+.centertext{
+  font-size:8rem;
+  position: absolute;
+  color: white;
+  top: 9rem;
+  left: 3rem;
+  
+}
+.centertext::before{
+content: attr(data-text);
+position: absolute;
+top: 0;
+left: 0;
+transform-origin: bottom;
+transform: rotateX(180deg);
+line-height: 7.25rem;
+background: linear-gradient(0deg,rgb(160, 15, 15) 0, transparent 80%);
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+opacity: 0.5;
+}
+.centertext2{
+  font-size:3rem;
+  position: absolute;
+  color:rgb(121, 8, 8);
+  top: 22rem;
+  left: 17rem;
+  opacity: 0.7;
+  animation: shadow 5s infinite;
+  text-shadow: 0 0 80px rgb(126, 6, 6);
+}
+@keyframes shadow{
+  from{
+    text-shadow: 0 0 0 rgb(126, 6, 6);
+  }
+  to{
+    text-shadow: 0 0 80px rgb(126, 6, 6);
+  }
+}
+
+/*:::::::::glitch::::::::::::::::::::::*/
+/*:::::::::MY::::::::::::::::::::::*/
+.my1{
+  position: absolute;
+  color:rgb(80, 79, 79);
+  right:18%;
+  top: 6%;
+  font-size: 4rem;
+  font-family: 'Cinzel Decorative', cursive;
+  
+}
+.fade-in1{
+  animation: fadein1 10s;
+}
+@keyframes fadein1{
+  from{
+    opacity: 0;
+}
+to{
+    opacity: 1;
+}
+}
+.fade-in2{
+  animation: fadein2 10s;
+}
+@keyframes fadein2{
+  from{
+      opacity: 0;
+  }
+  to{
+      opacity: 1;
+  }
+}
+.my2{
+  position: absolute;
+  color:rgb(94, 10, 10);
+  right:6%;
+  top: 14%;
+  font-size: 2.5rem;
+  font-family: 'Crimson Text', serif;
+  
+}
+/*:::::::::MY::::::::::::::::::::::*/
+
+#below{
+  position: relative;
+  
+  
+}
+.box{
+  position: relative;
+  padding-bottom:5rem;
+
+}
+.container{
+  margin-top:10%;
+ margin-left:30%;
+}
+.cards{
+    height: 15rem;
+    width: 30rem;
+    background:black;
+    position: relative;
+    border-radius:0 100px 0 100px;
+    transition: 2s;
+   overflow: hidden;
+  box-shadow: 0 0 20px rgb(15, 121, 112);
+    
+}
+
+
+.img-box img{
+  top: 0;
+  left: 0;
+  position: absolute;
+  height:100%;
+  width:100%;
+  transition: 0.4s;
+  
+}
+.cards:hover{
+
+  
+  border-radius:10px;
+  height:25rem;
+  width: 40rem;
+  box-shadow: 0 0 600px 600px rgb(105, 22, 22);
+  
+}
+.cards:hover .img-box img{
+  opacity: 20%;
+}
+.descContent{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: -100%;
+  padding: 20px;
+  opacity: 0;
+  padding-top:45px;
+  color: white;
+  transition: 0.5s;
+  text-align: center;
+  font-family: 'Sawarabi Mincho', sans-serif;
+}
+.cards:hover .descContent{
+  opacity: 1;
+  bottom: 0;
+}
+
+
+.cards .date{
+  position: absolute;
+  font-size: 1rem;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  color:rgb(114, 112, 112);
+  font-family: 'Cantora One', sans-serif;
+  color:rgb(90, 88, 88);
+  background: linear-gradient(0deg,rgb(53,4,4) 70%,transparent);
+}
+.cards .title{
+  position: absolute;
+  font-size:1.2rem;
+  padding-bottom: 10px;
+  top: 0;
+  text-align: center;
+  width: 100%;
+  font-family: 'Philosopher', sans-serif;
+  color:rgb(124, 123, 123);
+  background: linear-gradient(180deg,rgb(53,4,4),rgb(68, 5, 5),rgb(68, 5, 5),transparent);
+  transition:3s;
+}
+.cards:hover .title{
+  color: orange;
+  letter-spacing: 2px;
+}
+
+@media(max-width: 1200px){
+  #below{
+    margin-top: 0%;
+  }
+  .cards{
+    height: 10rem;
+    width: 20rem;
+  }
+  .container{
+    margin-top:10%;
+   margin-left:6%;
+  }
+  .cards:hover{
+    height:30rem;
+    width: 40rem;
+  }
+  .centertext2{
+    font-size:3rem;
+    top: 23rem;
+    left: 2.55rem; 
+  }
+  .centertext{
+    font-size:5rem;
+    top: 15rem;
+    left:1rem;
+  }
+  .centertext::before{
+    line-height: 4.55rem;
+  }
+  .d1{
+        
+    margin-top: 50px;
+    margin-left: 30px;
+}
+.d2{
+  
+    margin-left: -350px;
+    margin-top: -370px;
+}
+.d3{
+  
+    margin-top: -1060px;
+}
+.d4{
+  
+    margin-top: -650px;
+}
+.menu_items{
+  
+  top: 20%;
+   
+ }
+}
+@media(max-width: 900px){
+  #below{
+    margin-top: 0%;
+  }
+  .cards{
+    height: 10rem;
+    width: 20rem;
+  }
+  .container{
+    margin-top:10%;
+   margin-left:6%;
+  }
+  .cards:hover{
+    height:30rem;
+    width: 40rem;
+  }
+  .centertext2{
+    font-size:3rem;
+    top: 23rem;
+    left: 2.55rem; 
+  }
+  .centertext{
+    font-size:5rem;
+    top: 15rem;
+    left:1rem;
+  }
+  .centertext::before{
+    line-height: 4.55rem;
+  }
+  .d1{
+        
+    margin-top: 50px;
+    margin-left: 30px;
+}
+.d2{
+  
+    margin-left: -350px;
+    margin-top: -370px;
+}
+.d3{
+  
+    margin-top: -460px;
+}
+.d4{
+  
+    margin-top: -650px;
+}
+.menu_items{
+  
+  top: 10%;
+   
+ }
+}
+@media(max-width: 400px){
+  #below{
+    margin-top: 0%;
+  }
+  .cards{
+    height: 10rem;
+    width: 20rem;
+  }
+  .container{
+    margin-top:10%;
+   margin-left:6%;
+  }
+  .cards:hover{
+    height:40rem;
+    width: 20rem;
+  }
+  .centertext2{
+    font-size:3rem;
+    top: 23rem;
+    left: 2.55rem; 
+  }
+  .centertext{
+    font-size:5rem;
+    top: 15rem;
+    left:1rem;
+  }
+  .centertext::before{
+    line-height: 4.55rem;
+  }
+  .d1{
+        
+    margin-top: 50px;
+    margin-left: 30px;
+}
+.d2{
+  
+    margin-left: -50px;
+    margin-top: -70px;
+}
+.d3{
+  
+    margin-top: -60px;
+}
+.d4{
+  
+    margin-top: -150px;
+}
+.menu_items{
+  
+ top: 15%;
+  
+}
+}
+
+
