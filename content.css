@@ -365,7 +365,7 @@ textarea{
 
 @media(max-width: 1000px){
 h1 {
-  padding-top: 70px;
+  padding-top: 40px;
 }
 #main-desc1{
   left:7%;
@@ -376,7 +376,7 @@ h1 {
   left:7%;
   top: 16%;
   width:20rem;
-  height: 15rem;
+  height: 10rem;
 }
 #selected-image{
   
