@@ -271,6 +271,7 @@ textarea{
     border-radius: 2rem;
     font-size: 15px;
     font-weight: 300;
+  z-index: 222222222222;
     box-shadow: 0 0px 5px rgb(252, 1, 1);
 }
 #main-image:hover{
@@ -403,12 +404,12 @@ h1 {
 .invalid {
   
   left: 7%;
-  top: 34%; 
+  top: 35%; 
 }
 .imgprev{
   
 left: 7%;
-  top: 34%; 
+  top: 35%; 
 }
 }
 
