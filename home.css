@@ -266,7 +266,7 @@ to{
     background:black;
     position: relative;
     border-radius:0 100px 0 100px;
-    transition: 2s;
+    transition: 1s;
    overflow: hidden;
   box-shadow: 0 0 20px rgb(15, 121, 112);
     
